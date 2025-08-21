@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enquête via API Prolog</title>
+</head>
+<body>
+    <h1>Liste des suspects 🕵️</h1>
+    <ul id="liste-suspects">
+        </ul>
+        <h1>Liste des scenes 🕵️</h1>
+    <ul id="liste-scenes">
+        </ul>
+    
+    <script>
+        const baseUrl="http://localhost:8000"
+        // Fonction asynchrone pour interroger l'API
+        async function getSuspects() {
+            try {
+                // 2. Envoyer une requête HTTP GET au serveur Prolog
+                const response = await fetch(`${baseUrl}/suspects`);
+                
+                // 3. Convertir la réponse JSON en un objet JavaScript
+                const data = await response.json();
+
+                // 4. Manipuler le HTML (DOM) pour afficher les données
+                const ul = document.getElementById('liste-suspects');
+                data.suspects.forEach(suspect => {
+                    const li = document.createElement('li');
+                    li.textContent = suspect;
+                    ul.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erreur de connexion avec le serveur Prolog:', error);
+            }
+        }
+
+         async function getScenes() {
+            try {
+                // 2. Envoyer une requête HTTP GET au serveur Prolog
+                const response = await fetch(`${baseUrl}/scenes`);
+                
+                // 3. Convertir la réponse JSON en un objet JavaScript
+                const data = await response.json();
+
+                // 4. Manipuler le HTML (DOM) pour afficher les données
+                const ul = document.getElementById('liste-scenes');
+                data.scenes.forEach(scene => {
+                    const li = document.createElement('li');
+                    li.textContent = scene;
+                    ul.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Erreur de connexion avec le serveur Prolog:', error);
+            }
+        }
+        
+        
+        // 5. Exécuter la fonction au chargement de la page
+        getSuspects();
+        getScenes();
+    </script>
+</body>
+</html>
